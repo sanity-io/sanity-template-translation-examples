@@ -2,6 +2,12 @@
 
 This studio has two main ways of handling translated content
 
+## Caveats
+
+This will not currently work with GraphQL, because we are dynamically creating objects in-place and otherwise adding metadata fields not currently explicitly declarated in the schema. Thus the graphql endpoint will not expose these.
+
+The current functionality of the intl plugin uses subpaths for translated documents. This means you need an active session or a read token to query them, even when published. This will be changed in a future update to the plugin. For more information on who IDs and paths work on Sanity, see [the documentation](https://www.sanity.io/docs/ids)
+
 ## Field level translations
 
 In this configuration you are dealing with 1 document, say an Article, and any language you want to have localized content for will be saved on the same document. Example schema:
