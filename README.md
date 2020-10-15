@@ -1,23 +1,139 @@
-# sanity-template-translation-examples
+# Translation examples
 
-The template contains a Sanity Studio. It can be deployed on Netlify.
+This studio has two main ways of handling translated content
 
-Want to make a template for Sanity and your favourite front-end framework? We’re still maturing [sanity.io/create](https://sanity.io/create) and our APIs, but do tell us about it on [slack.sanity.io](https://slack.sanity.io).
+## Field level translations
 
-![The clean template](https://github.com/sanity-io/sanity-template-clean/blob/master/assets/frontend.jpg?raw=true)
+In this configuration you are dealing with 1 document, say an Article, and any language you want to have localized content for will be saved on the same document. Example schema:
 
-## Local development
+```js
+export default {
+  title: "Article",
+  name: "article",
+  type: "document",
+  localize: true,
+  preview: {
+    select: {
+      title: "title",
+    },
+  },
+  fields: [
+    {
+      type: "string",
+      name: "title",
+    },
+    {
+      type: "image",
+      name: "image",
+    },
+  ],
+};
+```
 
-You develop the templates in `/template`, and review your changes in `/build`.
+The `localize: true` parameter tells a helper function to transform any field from for example 'string', to an 'object' that has properties for each language you want to support. This transformation happens in `schema.js`.
 
-1. **Install dependencies with `npm install` in the root folder.** This will install the template development tool that watches changes in the `/template` folder and output the template to `/build`.
+You can also specify `localize: true` on individual fields, or set it to true on the document level, and override with `localize: false` on individual fields for more control. See the `author.js` schema definition for an example of this, where only the bio field is translated.
 
-2. **Run `npm run dev` in root folder.** This will build the template files to `/build`. This is how the code will look for those who install the project later.
+### Querying for localized content
 
-3. **Run `sanity install` in `/build/studio`** This will install the necessary dependencies for the Studio.
+An example GROQ query to fetch only the english content for this article
 
-4. **Run `sanity start` in `/build/studio`**. This will start the development server for Sanity Studio.
+```js
+const query = `
+* [_type == "article"] {
+  "title": title[$lang]
+  "image": image[$lang]
+}
+`;
+client.fetch(query, { lang: "en_GB" });
+```
 
-## Notes
+The result will be something like
 
-When developing, you may change `projectId` and `dataset` in `dev/template-values-development.json` to connect with a different Sanity project.
+```json
+[
+  {
+    "image": {
+      "_type": "image",
+      "asset": {
+        "_ref": "image-81ea32131654010e50723bbda524d84869880567-289x174-png",
+        "_type": "reference"
+      }
+    },
+    "title": "English title"
+  }
+]
+```
+
+So even though the fields are in reality objects, you can fold them down to concrete values in a groq query.
+
+## Document level translations
+
+In this mode we are using the `sanity-intl` plugin to give the editors a UI to switch between locales on a document level. You are starting new content in a base language, and you can add more locales as needed. They are then represented as separate documents, and by switching the locale from the "Translations" tab in the editor, you are looking at the full localized representation of that document.
+
+This mode is enabled in the schema via the `i18n` property
+
+```js
+// Global config object for document translations. Customize as needed on a document basis.
+import { i18n } from "../documentTranslation";
+
+export default {
+  title: "Post",
+  name: "post",
+  type: "document",
+  i18n, // Enables the document level translations
+  fields: [
+    {
+      title: "Title",
+      name: "title",
+      type: "string",
+    },
+    {
+      title: "Slug",
+      name: "slug",
+      type: "slug",
+      options: {
+        source: "title",
+      },
+    },
+    {
+      title: "Image",
+      name: "image",
+      type: "captionImage",
+      options: {
+        hotspot: true,
+      },
+    },
+    {
+      title: "Body",
+      name: "body",
+      type: "richText",
+    },
+  ],
+  preview: {
+    select: {
+      title: "title",
+      media: "image",
+    },
+  },
+};
+```
+
+The Studio includes examples of how to customize the desk structure with this type of translations. See `deskStructure.js`.
+
+### Document level querying
+
+The published document level translations have a property that indicates their locale. In this example that property is set to `_lang`. So if you were only interested in 'en_GB' content you could filter on that
+
+```js
+const query = `* [_type == "post" && _lang == "en_GB"]`;
+client.fetch(query);
+```
+
+And you will only receive posts written in english, in this example query. The documents with translations also have references to their other locale siblings. In this example project that property is named `_langRefs` and can be used to easily bring up other localized versions of a given document.
+
+## Links
+
+- [Read “getting started” in the docs](https://www.sanity.io/docs/introduction/getting-started?utm_source=readme)
+- [Join the community Slack](https://slack.sanity.io/?utm_source=readme)
+- [Extend and build plugins](https://www.sanity.io/docs/content-studio/extending?utm_source=readme)
