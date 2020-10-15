@@ -1,8 +1,4 @@
-# sanity-template-ecommerce-studio
-
-_WORK IN PROGRESS_
-
-_Template starter with an ecommerce studio._
+# sanity-template-translation-examples
 
 The template contains a Sanity Studio. It can be deployed on Netlify.
 

@@ -1,7 +1,7 @@
 {
   "version": 0,
-  "title": "Ecommerce Studio",
-  "description": "A Sanity Studio set up for ecommerce",
+  "title": "Translation Examples",
+  "description": "A Sanity Studio with examples of multi-lingual content",
   "previewMedia": {
     "type": "image",
     "src": "assets/studio.png",
