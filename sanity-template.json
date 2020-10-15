@@ -1,0 +1,40 @@
+{
+  "version": 0,
+  "title": "Ecommerce Studio",
+  "description": "A Sanity Studio set up for ecommerce",
+  "previewMedia": {
+    "type": "image",
+    "src": "assets/studio.png",
+    "alt": "A preview image of Sanity Studio."
+  },
+  "technologies": [
+    {
+      "id": "netlify",
+      "name": "Netlify",
+      "url": "https://www.netlify.com/"
+    }
+  ],
+  "deployments": [
+    {
+      "id": "studio",
+      "type": "studio",
+      "title": "Sanity Studio",
+      "description": "The Sanity Studio is where you edit and structure your content.",
+      "dir": "./studio",
+      "provider": {
+        "name": "netlify",
+        "config": {
+          "base": "studio",
+          "dir": "dist",
+          "cmd": "npm run build && cp ./netlify.toml dist"
+        },
+        "requirements": ["build-hook"]
+      },
+      "previewMedia": {
+        "type": "image",
+        "src": "assets/studio.png",
+        "alt": "A preview image of the Sanity Studio."
+      }
+    }
+  ]
+}

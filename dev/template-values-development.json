@@ -1,0 +1,28 @@
+{
+  "repository": {
+    "name": "sanity-template-translations",
+    "owner": "runeb",
+    "private": false
+  },
+  "sanity": {
+    "dataset": "production",
+    "projectId": "ls4nf7hj",
+    "projectTitle": "Translations"
+  },
+  "user": {
+    "displayName": "Rune Botten",
+    "profileImage": "",
+    "email": "rune@sanity.io"
+  },
+  "userInput": {},
+  "deployments": {
+    "studio": {
+      "url": "https://",
+      "providerName": "netlify",
+      "providerInfo": {
+        "buildHookId": "",
+        "siteId": ""
+      }
+    }
+  }
+}
