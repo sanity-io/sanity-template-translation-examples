@@ -29,5 +29,7 @@
     "react-icons": "^3.11.0",
     "sanity-plugin-intl-input": "^5.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@sanity/cli": "^2.0.5"
+  }
 }
