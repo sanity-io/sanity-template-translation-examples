@@ -1,7 +1,7 @@
 {
   "version": 0,
-  "title": "Translation Examples",
-  "description": "A Sanity Studio with examples of multi-lingual content",
+  "title": "Studio with Localization",
+  "description": "A Studio only starter with document and field level translation examples",
   "previewMedia": {
     "type": "image",
     "src": "assets/studio.png",
