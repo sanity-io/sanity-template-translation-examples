@@ -1,7 +1,7 @@
 {
   "name": "translation-examples",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "package.json",
   "author": "Rune Botten <rune@sanity.io>",
@@ -24,8 +24,8 @@
     "@sanity/desk-tool": "^2.18.0",
     "@sanity/vision": "^2.17.2",
     "prop-types": "^15.7.2",
-    "react": "^17.0",
-    "react-dom": "^17.0",
+    "react": "^18.2",
+    "react-dom": "^18.2",
     "react-icons": "^3.11.0",
     "sanity-plugin-intl-input": "^5.2.1"
   },
